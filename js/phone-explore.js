@@ -1,4 +1,5 @@
 
+// document.getElementById('error-msg').style.display = 'none';
 const searchResult = document.getElementById('search-result');
 const phoneDetails = document.getElementById('phone-details');
 const searchPhone = () => {
@@ -6,6 +7,7 @@ const searchPhone = () => {
     const searchField = document.getElementById('search-field');
     const errorMsg = document.getElementById('error-msg');
     const searchFieldText = searchField.value;
+    // document.getElementById('error-msg').style.display = 'none';
     if (searchFieldText == "") {
         errorMsg.innerText = 'Please provide a phone name';
     }
@@ -14,14 +16,22 @@ const searchPhone = () => {
         fetch(url)
             .then(response => response.json())
             .then(data => displaySearchResult(data.data.slice(0, 20)))
+        // .catch(error => displayError(error))
         searchField.value = '';
+
     }
+    // const displayError = error => {
+    //     document.getElementById('error-msg').style.display = 'block';
+    // }
 }
 // searchPhone()
 
 const displaySearchResult = (datas) => {
     // console.log(datas)
     searchResult.innerHTML = ""; // empty previous all phonde preview result
+    if (!datas) {
+        console.log('give valid input')
+    }
     datas.forEach(data => {
         // console.log(data)
         const div = document.createElement('div');
@@ -58,13 +68,19 @@ const displayPhoneDetail = (data) => {
         <img src="${data.image}" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">${data.name}</h5>
-                <p class="card-text">Release Date: ${data.releaseDate}</p>
+                <p class="card-text">Release Date: ${data.releaseDate ? data.releaseDate : 'Not Found'}</p>
                 <h6 class="card-text">Main Features:</h6>
                 <p class="card-text">Chipset: ${data.mainFeatures.chipSet}</p>
                 <p class="card-text">Memory: ${data.mainFeatures.memory}</p>
                 <p class="card-text">Display Size: ${data.mainFeatures.displaySize}</p>
                 <h6 class="card-text">Sensors:</h6>
-                <p class="card-text">${data.mainFeatures.sensors[0]}, ${data.mainFeatures.sensors[1]}, ${data.mainFeatures.sensors[2]}, ${data.mainFeatures.sensors[3]}, ${data.mainFeatures.sensors[4]}, ${data.mainFeatures.sensors[5]}</p>
+                <p class="card-text">${data.mainFeatures.sensors[0] ? data.mainFeatures.sensors[0] : 'Not Available'}</p>
+                <p class="card-text">${data.mainFeatures.sensors[1] ? data.mainFeatures.sensors[1] : 'Not Available'}</p>
+                <p class="card-text">${data.mainFeatures.sensors[2] ? data.mainFeatures.sensors[2] : 'Not Available'}</p>
+                <p class="card-text">${data.mainFeatures.sensors[3] ? data.mainFeatures.sensors[3] : 'Not Available'}</p>
+                <p class="card-text">${data.mainFeatures.sensors[4] ? data.mainFeatures.sensors[4] : 'Not Available'}</p>
+                <p class="card-text">${data.mainFeatures.sensors[5] ? data.mainFeatures.sensors[5] : 'Not Available'}</p>
+                <p class="card-text">Storage: ${data.mainFeatures.storage}</p>
                 <h6 class="card-text">Others Features:</h6>
                 <p class="card-text">Bluetooh: ${data.others.Bluetooth}</p>
                 <p class="card-text">USB: ${data.others.USB}</p>
