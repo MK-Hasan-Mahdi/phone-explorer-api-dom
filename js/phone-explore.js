@@ -2,10 +2,11 @@
 // document.getElementById('error-msg').style.display = 'none';
 const searchResult = document.getElementById('search-result');
 const phoneDetails = document.getElementById('phone-details');
+const errorMsg = document.getElementById('error-msg');
 const searchPhone = () => {
 
     const searchField = document.getElementById('search-field');
-    const errorMsg = document.getElementById('error-msg');
+
     const searchFieldText = searchField.value;
     // document.getElementById('error-msg').style.display = 'none';
     if (searchFieldText == "") {
@@ -19,6 +20,7 @@ const searchPhone = () => {
         // .catch(error => displayError(error))
         searchField.value = '';
         phoneDetails.innerHTML = '';
+        errorMsg.innerText = '';
     }
     // const displayError = error => {
     //     document.getElementById('error-msg').style.display = 'block';
@@ -28,9 +30,10 @@ const searchPhone = () => {
 
 const displaySearchResult = (datas) => {
     // console.log(datas)
-    searchResult.innerHTML = ""; // empty previous all phonde preview result
-    if (!datas) {
-        console.log('give valid input')
+    searchResult.innerHTML = ""; // empty previous all phond preview result
+    if (datas.length === 0) {
+        // alert('no result');
+        errorMsg.innerText = 'No Results Found';
     }
     datas.forEach(data => {
         // console.log(data)
@@ -74,6 +77,7 @@ const displayPhoneDetail = (data) => {
                 <p class="card-text">Memory: ${data.mainFeatures.memory}</p>
                 <p class="card-text">Display Size: ${data.mainFeatures.displaySize}</p>
                 <h6 class="card-text">Sensors:</h6>
+                <p class="card-text"></p>
                 <p class="card-text">${data.mainFeatures.sensors[0] ? data.mainFeatures.sensors[0] : 'Not Available'}</p>
                 <p class="card-text">${data.mainFeatures.sensors[1] ? data.mainFeatures.sensors[1] : 'Not Available'}</p>
                 <p class="card-text">${data.mainFeatures.sensors[2] ? data.mainFeatures.sensors[2] : 'Not Available'}</p>
