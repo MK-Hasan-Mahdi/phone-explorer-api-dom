@@ -1,18 +1,27 @@
+
 const searchResult = document.getElementById('search-result');
 const phoneDetails = document.getElementById('phone-details');
 const searchPhone = () => {
+
     const searchField = document.getElementById('search-field');
+    const errorMsg = document.getElementById('error-msg');
     const searchFieldText = searchField.value;
-    // console.log(searchFieldText)
-    const url = `https://openapi.programming-hero.com/api/phones?search=${searchFieldText}`;
-    fetch(url)
-        .then(response => response.json())
-        .then(data => displaySearchResult(data.data))
+    if (searchFieldText == "") {
+        errorMsg.innerText = 'Please provide a phone name';
+    }
+    else {
+        const url = `https://openapi.programming-hero.com/api/phones?search=${searchFieldText}`;
+        fetch(url)
+            .then(response => response.json())
+            .then(data => displaySearchResult(data.data))
+        searchField.value = '';
+    }
 }
 // searchPhone()
 
 const displaySearchResult = (datas) => {
-    console.log(datas)
+    // console.log(datas)
+    searchResult.innerHTML = "";
     datas.forEach(data => {
         // console.log(data)
         const div = document.createElement('div');
@@ -36,23 +45,24 @@ const displaySearchResult = (datas) => {
 const loadPhoneDetail = (phoneId) => {
     // console.log(phoneId)
     const url = `https://openapi.programming-hero.com/api/phone/${phoneId}`
-    // console.log(url);
     fetch(url)
         .then(response => response.json())
         .then(data => displayPhoneDetail(data.data))
 }
 const displayPhoneDetail = (data) => {
     console.log(data);
+    phoneDetails.innerHTML = "";
     const div = document.createElement('div');
     div.classList.add('card');
     div.innerHTML = `
         <img src="${data.image}" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">${data.name}</h5>
-                <p class="card-text">${data.releaseDate}</p>
-                <p class="card-text">${data.mainFeatures.chipSet}</p>
+                <p class="card-text">Release Date: ${data.releaseDate}</p>
+                <p class="card-text">Main Features: ${data.mainFeatures.chipSet}</p>
                 <p class="card-text">${data.mainFeatures.memory}</p>
                 <p class="card-text">${data.mainFeatures.displaySize}</p>
+                <p class="card-text">ID: ${data.slug}</p>
             </div>
     `;
     phoneDetails.appendChild(div);
