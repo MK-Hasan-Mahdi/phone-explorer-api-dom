@@ -18,7 +18,7 @@ const searchPhone = () => {
             .then(data => displaySearchResult(data.data.slice(0, 20)))
         // .catch(error => displayError(error))
         searchField.value = '';
-
+        phoneDetails.innerHTML = '';
     }
     // const displayError = error => {
     //     document.getElementById('error-msg').style.display = 'block';
@@ -53,7 +53,7 @@ const displaySearchResult = (datas) => {
 }
 // single phone details
 const loadPhoneDetail = (phoneId) => {
-    // console.log(phoneId)
+    console.log(phoneId)
     const url = `https://openapi.programming-hero.com/api/phone/${phoneId}`
     fetch(url)
         .then(response => response.json())
@@ -82,7 +82,7 @@ const displayPhoneDetail = (data) => {
                 <p class="card-text">${data.mainFeatures.sensors[5] ? data.mainFeatures.sensors[5] : 'Not Available'}</p>
                 <p class="card-text">Storage: ${data.mainFeatures.storage}</p>
                 <h6 class="card-text">Others Features:</h6>
-                <p class="card-text">Bluetooh: ${data.others.Bluetooth}</p>
+                <p class="card-text">Bluetooh: ${data.others.Bluetooth ? data.others.Bluetooth : 'Data not found'}</p>
                 <p class="card-text">USB: ${data.others.USB}</p>
                 <p class="card-text">GPS: ${data.others.GPS}</p>
                 <p class="card-text">NFC: ${data.others.NFC}</p>
