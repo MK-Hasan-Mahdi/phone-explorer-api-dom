@@ -1,14 +1,13 @@
 
-// document.getElementById('error-msg').style.display = 'none';
 const searchResult = document.getElementById('search-result');
 const phoneDetails = document.getElementById('phone-details');
 const errorMsg = document.getElementById('error-msg');
+// load all phone from api
 const searchPhone = () => {
 
     const searchField = document.getElementById('search-field');
-
     const searchFieldText = searchField.value;
-    // document.getElementById('error-msg').style.display = 'none';
+    // empty searchfield check
     if (searchFieldText == "") {
         errorMsg.innerText = 'Please provide a phone name';
     }
@@ -17,29 +16,25 @@ const searchPhone = () => {
         fetch(url)
             .then(response => response.json())
             .then(data => displaySearchResult(data.data.slice(0, 20)))
-        // .catch(error => displayError(error))
+
         searchField.value = '';
         phoneDetails.innerHTML = '';
         errorMsg.innerText = '';
     }
-    // const displayError = error => {
-    //     document.getElementById('error-msg').style.display = 'block';
-    // }
-}
-// searchPhone()
 
+}
+// display all searched phone
 const displaySearchResult = (datas) => {
     // console.log(datas)
-    searchResult.innerHTML = ""; // empty previous all phond preview result
+    searchResult.innerHTML = ""; // empty previous all phone preview result
     if (datas.length === 0) {
         // alert('no result');
-        errorMsg.innerText = 'No Results Found';
+        errorMsg.innerText = 'Search Results Not Found';
     }
     datas.forEach(data => {
         // console.log(data)
         const div = document.createElement('div');
         div.classList.add('col-lg-4', 'col-md-6', 'mb-5', 'rounded');
-
         div.innerHTML = `
         <div class="card h-100" style="width: 18rem;">
                 <img src="${data.image}" class="card-img-top" alt="...">
@@ -54,7 +49,7 @@ const displaySearchResult = (datas) => {
 
     })
 }
-// single phone details
+// load single phone details 
 const loadPhoneDetail = (phoneId) => {
     console.log(phoneId)
     const url = `https://openapi.programming-hero.com/api/phone/${phoneId}`
@@ -62,6 +57,7 @@ const loadPhoneDetail = (phoneId) => {
         .then(response => response.json())
         .then(data => displayPhoneDetail(data.data))
 }
+// display single phone details
 const displayPhoneDetail = (data) => {
     console.log(data);
     phoneDetails.innerHTML = ""; // empty previous single phone details preview
@@ -92,7 +88,6 @@ const displayPhoneDetail = (data) => {
                 <p class="card-text">NFC: ${data.others.NFC}</p>
                 <p class="card-text">Radio: ${data.others.Radio}</p>
                 <p class="card-text">WLAN: ${data.others.WLAN}</p>
-                <p class="card-text">ID: ${data.slug}</p>
             </div>    
     `;
     phoneDetails.appendChild(div);
