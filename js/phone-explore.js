@@ -10,6 +10,9 @@ const searchPhone = () => {
     // empty searchfield check
     if (searchFieldText == "") {
         errorMsg.innerText = 'Please provide a phone name';
+        searchResult.innerHTML = "";
+        phoneDetails.innerHTML = "";
+
     }
     else {
         const url = `https://openapi.programming-hero.com/api/phones?search=${searchFieldText}`;
@@ -17,9 +20,9 @@ const searchPhone = () => {
             .then(response => response.json())
             .then(data => displaySearchResult(data.data.slice(0, 20)))
 
-        searchField.value = '';
-        phoneDetails.innerHTML = '';
-        errorMsg.innerText = '';
+        searchField.value = "";
+        phoneDetails.innerHTML = "";
+        errorMsg.innerText = "";
     }
 
 }
@@ -34,15 +37,17 @@ const displaySearchResult = (datas) => {
     datas.forEach(data => {
         // console.log(data)
         const div = document.createElement('div');
-        div.classList.add('col-lg-4', 'col-md-6', 'mb-5', 'rounded');
+        // div.classList.add('col-lg-4', 'col-md-6', 'mb-5', 'rounded');
         div.innerHTML = `
-        <div class="card h-100" style="width: 18rem;">
+        <div class="col">
+        <div class="card">
                 <img src="${data.image}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">${data.brand}</h5>
                     <p class="card-text">${data.phone_name}</p>
-                    <button onclick="loadPhoneDetail('${data.slug}')" href="#" class="btn btn-success">Phone Details</button>
+                    <button onclick="loadPhoneDetail('${data.slug}')" class="btn btn-success">Phone Details</button>
                 </div>
+        </div>
         </div>
         `
         searchResult.appendChild(div);
@@ -62,33 +67,39 @@ const displayPhoneDetail = (data) => {
     console.log(data);
     phoneDetails.innerHTML = ""; // empty previous single phone details preview
     const div = document.createElement('div');
-    div.classList.add('col', 'card');
+    div.classList.add('detail-info');
     div.innerHTML = `
-        <img src="${data.image}" class="card-img-top" alt="...">
+    <div class="card flex-lg-row mb-3">
+        <img src="${data.image}" style="width:30rem;" class="card-img-top img-fluid" alt="...">
             <div class="card-body">
-                <h5 class="card-title">${data.name}</h5>
-                <p class="card-text">Release Date: ${data.releaseDate ? data.releaseDate : 'Not Found'}</p>
+                <h5 class="card-title"><b>Brand:</b> ${data.brand}</h5>
+                <p class="card-text"><b>Model:</b> ${data.name}</p>
+                
+                <ul class="list-group list-group-flush">
+                <li class="list-group-item"><p><b>Release:</b> ${data.releaseDate ? data.releaseDate : 'Not Available'}</p></li>
                 <h6 class="card-text">Main Features:</h6>
-                <p class="card-text">Chipset: ${data.mainFeatures.chipSet}</p>
-                <p class="card-text">Memory: ${data.mainFeatures.memory}</p>
-                <p class="card-text">Display Size: ${data.mainFeatures.displaySize}</p>
-                <h6 class="card-text">Sensors:</h6>
-                <p class="card-text"></p>
-                <p class="card-text">${data.mainFeatures.sensors[0] ? data.mainFeatures.sensors[0] : 'Not Available'}</p>
-                <p class="card-text">${data.mainFeatures.sensors[1] ? data.mainFeatures.sensors[1] : 'Not Available'}</p>
-                <p class="card-text">${data.mainFeatures.sensors[2] ? data.mainFeatures.sensors[2] : 'Not Available'}</p>
-                <p class="card-text">${data.mainFeatures.sensors[3] ? data.mainFeatures.sensors[3] : 'Not Available'}</p>
-                <p class="card-text">${data.mainFeatures.sensors[4] ? data.mainFeatures.sensors[4] : 'Not Available'}</p>
-                <p class="card-text">${data.mainFeatures.sensors[5] ? data.mainFeatures.sensors[5] : 'Not Available'}</p>
-                <p class="card-text">Storage: ${data.mainFeatures.storage}</p>
+                <li class="list-group-item"><p><b>Cheapset:</b> ${data.mainFeatures.chipSet ? data.mainFeatures.chipSet : 'Not Available'}</p></li>
+                <li class="list-group-item"><p><b>Memory:</b> ${data.mainFeatures.memory ? data.mainFeatures.memory : 'Not Available'}</p></li>
+                <li class="list-group-item"><p><b>Display Size:</b> ${data.mainFeatures.displaySize}</p></li>
+                <h6 class="card-text"><b>Sensors:</b></h6>
+                
+                <li class="list-group-item"><p>${data.mainFeatures.sensors[0] ? data.mainFeatures.sensors[0] : 'Not Available'}</p></li>
+                <li class="list-group-item"><p>${data.mainFeatures.sensors[1] ? data.mainFeatures.sensors[1] : 'Not Available'}</p></li>
+                <li class="list-group-item"><p>${data.mainFeatures.sensors[2] ? data.mainFeatures.sensors[2] : 'Not Available'}</p></li>
+                <li class="list-group-item"><p>${data.mainFeatures.sensors[3] ? data.mainFeatures.sensors[3] : 'Not Available'}</p></li>
+                <li class="list-group-item"><p>${data.mainFeatures.sensors[4] ? data.mainFeatures.sensors[4] : 'Not Available'}</p></li>
+                <li class="list-group-item"><p>${data.mainFeatures.sensors[5] ? data.mainFeatures.sensors[5] : 'Not Available'}</p></li>
+                <li class="list-group-item"><p><b>Storage:</b> ${data.mainFeatures.storage}</p></li>
                 <h6 class="card-text">Others Features:</h6>
-                <p class="card-text">Bluetooh: ${data.others.Bluetooth ? data.others.Bluetooth : 'Data not found'}</p>
-                <p class="card-text">USB: ${data.others.USB}</p>
-                <p class="card-text">GPS: ${data.others.GPS}</p>
-                <p class="card-text">NFC: ${data.others.NFC}</p>
-                <p class="card-text">Radio: ${data.others.Radio}</p>
-                <p class="card-text">WLAN: ${data.others.WLAN}</p>
-            </div>    
+                <li class="list-group-item"><p><b>Bluetooh:</b> ${data.others.Bluetooth ? data.others.Bluetooth : 'Data not found'}</p></li>
+                <li class="list-group-item"><p><b>USB:</b> ${data.others.USB}</p></li>
+                <li class="list-group-item"><p><b>GPS:</b> ${data.others.GPS}</p></li>
+                <li class="list-group-item"><p><b>NFC:</b> ${data.others.NFC}</p></li>
+                <li class="list-group-item"><p><b>Radio:</b> ${data.others.Radio}</p></li>
+                <li class="list-group-item"><p><b>WLAN:</b> ${data.others.WLAN}</p></li>
+                </ul>
+            </div>
+    </div>           
     `;
     phoneDetails.appendChild(div);
 }

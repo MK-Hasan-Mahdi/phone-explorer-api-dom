@@ -17,24 +17,29 @@
 <body>
 
     <section class="container">
-        <h1 class="text-center text-success mt-5">Phone Explorer</h1>
-        <!-- phone search -->
-        <div id="input-search" class="input-group m-5 mx-auto w-50 col-12">
-            <input id="search-field" type="text" class="form-control rounded-pill" placeholder="Search Phone"
-                aria-label="Recipient's username" aria-describedby="button-addon2">
-            <button onclick="searchPhone()" id="search-btn" class="btn btn-outline-success rounded-pill"
-                type="button">Search</button>
+        <div class="w-auto my-4 mx-auto">
+            <h1 class="text-center text-success mt-5">Phone Explorer</h1>
+            <!-- phone search -->
+            <div id="input-search" class="input-group m-5 mx-auto w-50 col-12">
+                <input id="search-field" type="text" class="form-control rounded-pill" placeholder="Search Phone"
+                    aria-label="search-field" aria-describedby="button-addon2">
+                <button onclick="searchPhone()" id="search-btn" class="btn btn-outline-success rounded-pill"
+                    type="button">Search</button>
+            </div>
         </div>
-        <!-- single phone details -->
-        <div id="phone-details" class="w-50 mx-auto mb-5 shadow-lg rounded-3">
+        <div id="search-container">
+            <!-- single phone details -->
+            <div id="phone">
+                <div id="phone-details" class="mx-auto shadow-lg rounded-3">
 
+                </div>
+            </div>
+            <!-- all phone searched result -->
+            <div id="search-result" class="row row-cols-1 row-cols-md-3 g-4">
+
+            </div>
+            <h2 id="error-msg" class="text-warning text-center"></h2>
         </div>
-        <!-- all phone searched result -->
-        <div id="search-result" class="row">
-
-        </div>
-        <h2 id="error-msg" class="text-warning text-center"></h2>
-
     </section>
     <!-- js file -->
     <script src="js/phone-explore.js"></script>
