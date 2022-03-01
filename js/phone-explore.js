@@ -64,7 +64,7 @@ const loadPhoneDetail = (phoneId) => {
 }
 const displayPhoneDetail = (data) => {
     console.log(data);
-    phoneDetails.innerHTML = ""; // empty previous single phonde details preview
+    phoneDetails.innerHTML = ""; // empty previous single phone details preview
     const div = document.createElement('div');
     div.classList.add('col', 'card');
     div.innerHTML = `
@@ -93,7 +93,7 @@ const displayPhoneDetail = (data) => {
                 <p class="card-text">Radio: ${data.others.Radio}</p>
                 <p class="card-text">WLAN: ${data.others.WLAN}</p>
                 <p class="card-text">ID: ${data.slug}</p>
-            </div>
+            </div>    
     `;
     phoneDetails.appendChild(div);
 }
